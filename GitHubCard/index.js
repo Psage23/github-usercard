@@ -2,10 +2,11 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
-
+const cards = document.querySelector('.cards');
 axios.get('https://api.github.com/users/Psage23')
-.then(response => {
-  console.log(response)
+.then((response) => {
+  const newCard = hubProfile(response.data);
+  cards.appendChild(newCard);
 })
 .catch(error => {
   console.log("The data was not returned", error)
@@ -61,36 +62,51 @@ const followersArray = [];
   luishrd
   bigknell
 */
-// const profile = document.querySelector('data');
+// const profileData = document.querySelector('data');
 
-// function hubProfile(profileData){
-//   const card = document.createElement('div');
-//   const pic = document.createElement('img');
-//   const cardInfo = document.createElement('div');
-//   const name = document.createElement('h3');
-//   const userName = document.createElement('p')
-//   const location = document.createElement('p');
-//   const proFile = document.createElement('p');
-//   const urlPage = document.createElement('a);
-//   const followerS = document.createElement('p');
-//   const followIng = document.createElement('p');
-//   const bio = document.createElement('p');
+function hubProfile(data){
+  const card = document.createElement('div');
+  const pic = document.createElement('img');
+  const cardInfo = document.createElement('div');
+  const name = document.createElement('h3');
+  const userName = document.createElement('p')
+  const location = document.createElement('p');
+  const proFile = document.createElement('p');
+  const urlPage = document.createElement('a');
+  const followerS = document.createElement('p');
+  const followIng = document.createElement('p');
+  const bio = document.createElement('p');
 
-//   //textContent
-//   pic.src = profileData.avatar_url;
-//   name.textContent = profileData.name;
-//   userName.textContent = profileData.login;
-//   location.textContent = 'Location: ';
-//   urlPage.textContent = profileData.html_url;
-//   urlPage.textContent = profileData.html_url;
-//   proFile.textContent = 'Profile: ';
-//   followerS.textContent = 'Followers: ';
-//   followIng.textContent = 'Following: ';
-//   bio.textContent = 'Bio: ';
 
-//   //classList
+  //textContent
+  pic.src = data.avatar_url;
+  name.textContent = data.name;
+  userName.textContent = data.login;
+  location.textContent = data.location;
+  urlPage.textContent = data.html_url;
+  urlPage.setAttribute('href', data.html_url);
+  proFile.textContent = 'Profile: ';
+  followerS.textContent = `Followers: ${data.followers}`;
+  followIng.textContent = `Following: ${data.following}`;
+  bio.textContent = data.bio;
 
-//   //appendChild
+  //classList
+  card.classList.add('card');
+  cardInfo.classList.add('cardInfo');
+  name.classList.add('name');
+  userName.classList.add('username');
 
-//   return card;
-// }
+  //appendChild
+  card.appendChild(pic);
+  card.appendChild(cardInfo);
+  cardInfo.appendChild(name);
+  cardInfo.appendChild(userName);
+  cardInfo.appendChild(location);
+  cardInfo.appendChild(proFile);
+  cardInfo.appendChild(followerS);
+  cardInfo.appendChild(followIng);
+  cardInfo.appendChild(bio);
+  proFile.appendChild(urlPage);
+
+  return card;
+}
