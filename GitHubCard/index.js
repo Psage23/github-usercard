@@ -33,7 +33,7 @@ axios.get('https://api.github.com/users/Psage23')
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+// const followersArray = [];
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -110,3 +110,13 @@ function hubProfile(data){
 
   return card;
 }
+
+let followersArray = [];
+followersArray = ['danhamraj7','ElliotPhipps','WalterTheCodeGuy','crutledgedev','cmruss'];
+
+followersArray.forEach(follower => axios.get(`https://api.github.com/users/${follower}`)
+  .then(response => {
+    cards.appendChild(hubProfile(response.data));
+  })
+  .catch(error => console.log(error))
+);
